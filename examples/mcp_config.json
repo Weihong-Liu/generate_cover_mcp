@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "generate-cover": {
+      "command": "generate-cover-mcp",
+      "args": [],
+      "env": {
+        "COVER_HTML_PATH": "/path/to/your/CoverMaster.html"
+      }
+    }
+  }
+}

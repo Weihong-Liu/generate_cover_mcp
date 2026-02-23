@@ -1,0 +1,26 @@
+[
+  {
+    "title": "AI编程技术分享：如何使用Claude进行代码开发",
+    "subtitle": "精选内容·建议收藏",
+    "categories": ["技术", "AI", "编程"],
+    "url": "https://example.com/article?sn=12345678"
+  },
+  {
+    "title": "创意设计新趋势：2026年UI设计指南",
+    "subtitle": "设计师必读",
+    "categories": ["设计", "创意", "UI"],
+    "url": "https://example.com/article?sn=87654321"
+  },
+  {
+    "title": "重要！系统安全漏洞修复指南",
+    "subtitle": "紧急通知·立即查看",
+    "categories": ["安全", "系统"],
+    "url": "https://example.com/article?sn=11223344"
+  },
+  {
+    "title": "生活小技巧：提高工作效率的10个方法",
+    "subtitle": "实用干货分享",
+    "categories": ["生活", "效率"],
+    "url": "https://example.com/article?sn=44332211"
+  }
+]
