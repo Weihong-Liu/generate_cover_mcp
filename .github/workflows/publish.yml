@@ -6,14 +6,12 @@ on:
       - 'v*'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  pypi-publish:
-    name: Upload release to PyPI
+  build:
+    name: Build package
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,5 +29,64 @@ jobs:
       - name: Build package
         run: python -m build
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  pypi-publish:
+    name: Upload to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: Create GitHub Release
+    needs: pypi-publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          body: |
+            ## Installation
+            ```bash
+            pip install generate-cover-mcp
+            ```
+
+            ## Features
+            - Auto-install Chromium browser on first import
+            - Proxy support for browser download
+            - MCP dependencies now optional
+            - Bundled CoverMaster.html template
+
+            ## Usage
+            ```bash
+            generate-cover "你的标题"
+            ```
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
