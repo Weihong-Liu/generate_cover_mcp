@@ -54,18 +54,31 @@ class CoverGenerator:
         Initialize the cover generator.
 
         Args:
-            html_path: Path to CoverMaster2.html template
+            html_path: Path to CoverMaster2.html template (auto-detected if not specified)
             output_dir: Directory to save generated covers
         """
         if html_path is None:
-            html_path = os.environ.get('COVER_HTML_PATH', 'CoverMaster.html')
+            html_path = os.environ.get('COVER_HTML_PATH')
+
+        if html_path is None:
+            # Try to find HTML template in package directory first
+            from importlib.resources import files
+            try:
+                package_dir = files('generate_cover_mcp')
+                html_path = str(package_dir / 'CoverMaster.html')
+            except (ImportError, FileNotFoundError):
+                # Fallback to current directory
+                html_path = 'CoverMaster.html'
 
         self.html_path = Path(html_path).resolve()
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
         if not self.html_path.exists():
-            raise FileNotFoundError(f"HTML template not found: {self.html_path}")
+            raise FileNotFoundError(
+                f"HTML template not found: {self.html_path}\n"
+                f"Please ensure CoverMaster.html is in the package directory or set COVER_HTML_PATH"
+            )
 
     def select_style(self, title: str, categories: List[str] = None) -> str:
         """Automatically select style based on title and categories."""

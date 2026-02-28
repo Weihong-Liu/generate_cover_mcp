@@ -2,7 +2,8 @@ include README.md
 include LICENSE
 include pyproject.toml
 include CoverMaster.html
-recursive-include src/generate_cover_mcp *.py
+include src/generate_cover_mcp/CoverMaster.html
+recursive-include src/generate_cover_mcp *.py *.html
 recursive-include examples *.json *.py
 recursive-include tests *.py
 global-exclude __pycache__
