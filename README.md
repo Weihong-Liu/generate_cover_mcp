@@ -1,6 +1,6 @@
 # Generate Cover MCP
 
-A Model Context Protocol (MCP) server for generating HTML-based covers using CoverMaster2.
+A Model Context Protocol (MCP) server for generating HTML-based covers using CoverMaster.
 
 ## Features
 
